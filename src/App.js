@@ -74,6 +74,10 @@ function App() {
     setResultJson([])
   }
 
+  const removeDomino = (index) => {
+    setSelectedDominos(selectedDominos.filter((_, i) => i !== index));
+  };
+  
   const handleCalculate = async () => {
     const response = await postGetResultChain(selectedDominos);
     console.log(response);
@@ -94,7 +98,6 @@ function App() {
     }
     
   };
-
 
   return (
     <div className="App">
@@ -144,18 +147,12 @@ function App() {
           <span className='buttons'>Fichas seleccionadas:</span>
             <div className="domino-container">
               {selectedDominos.map((domino, index) => (
-                  <div  key={index} className="domino">
+                  <div  key={index} className="domino" onClick={() => removeDomino(index)}>
                     <div className="top">{domino.FirstNumber}</div>
                     <div className="bottom">{domino.LastNumber}</div>
                   </div>
               ))}
             </div>
-          </div>
-        </div>
-        <div className='row justify-content-md-center'>
-          <div className='col col-lg-3 buttons'>
-            <button className="btn btn-primary calculate" onClick={handleCalculate}>Calcular</button>
-            <button className="btn btn-secondary remove" onClick={handleClearSelections}>Limpiar</button>
           </div>
         </div>
         <div className='row justify-content-md-center'>
@@ -169,6 +166,12 @@ function App() {
                   </div>
                 ))}
             </div>
+          </div>
+        </div>
+        <div className='row justify-content-md-center'>
+          <div className='col col-lg-3 buttons'>
+            <button className="btn btn-primary calculate" onClick={handleCalculate}>Calcular</button>
+            <button className="btn btn-danger remove" onClick={handleClearSelections}>Limpiar</button>
           </div>
         </div>
       </div>
